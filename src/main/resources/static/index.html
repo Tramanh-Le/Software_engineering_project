@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		Cancer Cant mock homepage
+	</head>
+	<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<body ng-app="getApp">
+		<div ng-controller="getUsers">
+			<ul>
+				<li ng-repeat= "user in users">
+					Age: {{user.age}}, First Name: {{user.firstName}}
+				</li>
+			</ul>
+		</div>
+	</body>
+	
+<script>
+var getApp = angular.module('getApp',[]);
+getApp.controller('getUsers', function($scope, $http){
+	$http.get('localhost:8080/UserFeatures/allUsers').
+	then(function(response){
+		$scope.users = response.data;
+	});
+});
+</script>
+</html>
+
+
