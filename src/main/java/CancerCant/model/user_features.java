@@ -1,10 +1,14 @@
 package CancerCant.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,26 +17,21 @@ public class user_features {
 	//primary key. auto-generated id
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "ID")
 	private long id;
 	
-	//age, first name, religion
+	//foreign key.
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="id")
+	private user_contact_data userContactData;
+	
 	private int age;
-	private String first_name;
-	private String religion;
-	
-	//cancer category, role to cancer
 	private String cancer_category;
-	private String role_to_cancer;
-	
-	//distance
 	private int distance;
-
-	//treatment stage
+	private String religion;
 	private String treatment_stage;
-	
-	//gender
 	private String gender;
+	private String role_to_cancer;
 	
 	//constructor
 	public user_features()
@@ -47,13 +46,6 @@ public class user_features {
 		this.age = age;
 	}
 
-	public String getFirst_name() {
-		return first_name;
-	}
-
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
-	}
 
 	public String getReligion() {
 		return religion;
@@ -107,5 +99,6 @@ public class user_features {
 		return id;
 	}
 	//getters and setters
+
 	
 }
