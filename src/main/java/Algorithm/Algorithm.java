@@ -1,8 +1,17 @@
-import CancerCant.controller.*;
+package Algorithm;
+import java.util.ArrayList;
+import java.util.List;
 
+import CancerCant.controller.*;
+import CancerCant.model.user_contact_data;
+import CancerCant.model.user_contact_data;
+import CancerCant.repository.user_contact_data_repository;
 
 public class Algorithm {
 	//new users information
+	public Algorithm(){
+		
+	}
 	private String cancerType;
 	private int age;
 	private char gender;
@@ -37,5 +46,14 @@ public class Algorithm {
 	void setRole(String r){role = r;}
 	void setPoints(int p){points = p;}
 	
+	public void testing(){
+		List<user_features_controller> list = new ArrayList<user_features_controller>();
+		user_contact_data_controller user = new user_contact_data_controller();
+		user.getAllUserContactData();
+		
+		for(int i = 0; i < list.size(); i++){
+			System.out.println(user.getAllUserContactData().get(i));
+		}
+	}
 	
 }
