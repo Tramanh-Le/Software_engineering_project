@@ -9,7 +9,6 @@ public class CancerCantApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(CancerCantApplication.class, args);
-		Algorithm al = new Algorithm();
-		al.testing();
+		
 	}
 }
