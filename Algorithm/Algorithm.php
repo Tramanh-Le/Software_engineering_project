@@ -19,6 +19,7 @@ class Algorithm
     private $NewphaseTreatment_1;
     private $NewphaseTreatment_2;
     private $Newrole;
+    private $NewId;
 
     // variables for comparator
     private $cancerType;
@@ -29,6 +30,7 @@ class Algorithm
     private $phaseTreatment_1;
     private $phaseTreatment_2;
     private $role;
+    private $Id;
 
     private $points;
 
@@ -36,9 +38,10 @@ class Algorithm
     {
     }
 
-    public function setNewPerson($age, $CancerType, $gender, $religion, $TreatmentLocation, $PhaseTreatment_1,
+    public function setNewPerson($Id,$age, $CancerType, $gender, $religion, $TreatmentLocation, $PhaseTreatment_1,
                                  $PhaseTreament_2, $Role)
     {
+        $this->setNewId($Id);
         $this->setNewAge($age);
         $this->setNewCancerType($CancerType);
         $this->setNewGender($gender);
@@ -49,9 +52,10 @@ class Algorithm
         $this->setNewRole($Role);
     }
 
-    public function setPerson($age, $CancerType, $gender, $religion, $TreatmentLocation, $PhaseTreatment_1,
+    public function setPerson($id,$age, $CancerType, $gender, $religion, $TreatmentLocation, $PhaseTreatment_1,
                               $PhaseTreament_2, $Role)
     {
+        $this->setId($id);
         $this->setAge($age);
         $this->setCancerType($CancerType);
         $this->setGender($gender);
@@ -72,6 +76,7 @@ class Algorithm
     public function getNewphaseTreatment_1(){return $this->NewphaseTreatment_1;}
     public function getNewphaseTreatment_2(){return $this->NewphaseTreatment_2;}
     public function getNewRole(){return $this->Newrole;}
+    public function getNewId(){return $this ->NewId;}
 
     // assigns the points to each comparator category
     public function getpoints(){return $this->points;}
@@ -85,6 +90,7 @@ class Algorithm
     public function getphaseTreatment_1(){return $this->phaseTreatment_1;}
     public function getphaseTreatment_2(){return $this->phaseTreatment_2;}
     public function getRole(){return $this->role;}
+    public function getId(){return $this-> Id;}
 
     // setters for all variables in the class
     public function setNewCancerType($c){$this->NewcancerType = $c;}
@@ -96,13 +102,14 @@ class Algorithm
     public function setNewPhaseTreatment_2($PT){$this->NewphaseTreatment_2 = $PT;}
     public function setNewRole($r){$this->Newrole = $r;}
     public function setPoints($p){$this->points = $p;}
+    public function setNewId($id){$this ->NewId = $id;}
 
     // assigning the point system
     public function setCancerType($c){$this->cancerType = $c;}
     public function setAge($a){$this->age = $a;}
     public function setGender($g){$this->gender = $g;}
     public function setReligion($r){$this->religion = $r;}
-
+    public function setId($i){$this->Id = $i;}
 
     // setters for point-system algorithm
     public function setTreatmentLocation($TL)
@@ -117,16 +124,16 @@ class Algorithm
     // calculating the age to assign points
     public function calulateAge($NewA, $a)
     {
-        $age = abs($NewA - $a); // Assigning age as a new age where the NewA uses the previous age
-        $Newpoints = 0;
-        if ($age <= 5)
-            $Newpoints = 30;  // If the age difference between matched pairs is less than 5 years, the algorithm assigns the pair 30 points
-        elseif ($age <= 10)
-            $Newpoints = 20; // If the age difference between matched pairs is between 6 and 10 years, the algorithm assigns the pair 20 points
-        else if (age <= 15)
-            $Newpoints = 10; // If the age difference between matched pairs is between 11 and 15 years, the algorithm assigns the pair 10 points
-        else
-            $Newpoints = 0; // If the age is out of range above 15 years, assign no points
+        //$age = abs($NewA - $a); // Assigning age as a new age where the NewA uses the previous age
+        //$Newpoints = 0;
+        if ($NewA=$a)
+           $Newpoints = 30;  // If the age difference between matched pairs is less than 5 years, the algorithm assigns the pair 30 points
+        //elseif ($age <= 10)
+          //  $Newpoints = 20; // If the age difference between matched pairs is between 6 and 10 years, the algorithm assigns the pair 20 points
+        //else if (age <= 15)
+          //  $Newpoints = 10; // If the age difference between matched pairs is between 11 and 15 years, the algorithm assigns the pair 10 points
+        //else
+//            $Newpoints = 0; // If the age is out of range above 15 years, assign no points
 
         $Newpoints = Algorithm::getpoints() + $Newpoints;
         $this->setPoints($Newpoints);

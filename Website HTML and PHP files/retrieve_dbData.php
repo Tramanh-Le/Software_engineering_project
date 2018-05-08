@@ -48,33 +48,33 @@ else {
     // output data of each row
     while($row = $last_result->fetch_assoc()) {
       handle_row($row);
-        $p1 -> setNewPerson($row["age"],$row["cancer_category"],$row["gender"],$row["religion"],"TL",$row["treatment_stage"],"PT",$row["role_to_cancer"]);
+        $p1 -> setNewPerson($row["user_contact_data_id"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],"TL",$row["treatment_stage"],"PT",$row["role_to_cancer"]);
         print("\n");
         print($p1->getNewAge());
         print("\n");
     }
     if($result->num_rows > 0)
-        while($row = $result->fetch_assoc()){
-            list_compare($row);
-            $p1 -> setPerson($row["age"],$row["cancer_category"],$row["gender"],$row["religion"],"TL",$row["treatment_stage"],"PT",$row["role_to_cancer"]);
+        while($row_new = $result->fetch_assoc()) {
+            handle_row($row_new);
+            $p1->setPerson($row_new["user_contact_data_id"], $row_new["age"], $row_new["cancer_category"], $row_new["gender"], $row_new["religion"], "TL", $row_new["treatment_stage"], "PT", $row_new["role_to_cancer"]);
             $p1->runAlgorithm();
-            if($compare1->getpoints() < $p1 ->getpoints()){
-                $compare3->setPerson($compare2->getAge(),$compare2->getCancerType(),$compare2->getGender(),$compare2->getReligion(),$compare2->getTreatementLoctation(),$compare2->getphaseTreatment_1(),$compare2->getphaseTreatment_2(),$compare2->getRole());
-                $compare3->setPoints($compare2->getpoints());
-                $compare2->setPerson($compare1->getAge(),$compare1->getCancerType(),$compare1->getGender(),$compare1->getReligion(),$compare1->getTreatementLoctation(),$compare1->getphaseTreatment_1(),$compare1->getphaseTreatment_2(),$compare1->getRole());
-                $compare2->setPoints($compare1->getpoints());
-                $compare1->setPerson($p1->getAge(),$p1->getCancerType(),$p1->getGender(),$p1->getReligion(),$p1->getTreatementLoctation(),$p1->getphaseTreatment_1(),$p1->getphaseTreatment_2(),$p1->getRole());
-                $compare1->setPoints($p1->getpoints());
-            }
-            elseif($compare2->getpoints() < $p1->getpoints()){
-                $compare3->setPerson($compare2->getAge(),$compare2->getCancerType(),$compare2->getGender(),$compare2->getReligion(),$compare2->getTreatementLoctation(),$compare2->getphaseTreatment_1(),$compare2->getphaseTreatment_2(),$compare2->getRole());
-                $compare3->setPoints($compare2->getpoints());
-                $compare2->setPerson($p1->getAge(),$p1->getCancerType(),$p1->getGender(),$p1->getReligion(),$p1->getTreatementLoctation(),$p1->getphaseTreatment_1(),$p1->getphaseTreatment_2(),$p1->getRole());
-                $compare2->setPoints($p1->getpoints());
-            }
-            elseif($compare3 < $p1->getpoints()){
-                $compare3->setPerson($p1->getAge(),$p1->getCancerType(),$p1->getGender(),$p1->getReligion(),$p1->getTreatementLoctation(),$p1->getphaseTreatment_1(),$p1->getphaseTreatment_2(),$p1->getRole());
-                $compare3->setPoints($p1->getpoints());
+           if ($p1->getId() != $p1->getNewId()) {
+                if ($compare1->getpoints() < $p1->getpoints()) {
+                    $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(), $compare2->getReligion(), $compare2->getTreatementLoctation(), $compare2->getphaseTreatment_1(), $compare2->getphaseTreatment_2(), $compare2->getRole());
+                    $compare3->setPoints($compare2->getpoints());
+                    $compare2->setPerson($compare1->getId(), $compare1->getAge(), $compare1->getCancerType(), $compare1->getGender(), $compare1->getReligion(), $compare1->getTreatementLoctation(), $compare1->getphaseTreatment_1(), $compare1->getphaseTreatment_2(), $compare1->getRole());
+                    $compare2->setPoints($compare1->getpoints());
+                    $compare1->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(), $p1->getphaseTreatment_1(), $p1->getphaseTreatment_2(), $p1->getRole());
+                    $compare1->setPoints($p1->getpoints());
+                } elseif ($compare2->getpoints() < $p1->getpoints()) {
+                    $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(), $compare2->getReligion(), $compare2->getTreatementLoctation(), $compare2->getphaseTreatment_1(), $compare2->getphaseTreatment_2(), $compare2->getRole());
+                    $compare3->setPoints($compare2->getpoints());
+                    $compare2->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(), $p1->getphaseTreatment_1(), $p1->getphaseTreatment_2(), $p1->getRole());
+                    $compare2->setPoints($p1->getpoints());
+                } elseif ($compare3 < $p1->getpoints()) {
+                    $compare3->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(), $p1->getphaseTreatment_1(), $p1->getphaseTreatment_2(), $p1->getRole());
+                    $compare3->setPoints($p1->getpoints());
+                }
             }
         }
 }
@@ -98,23 +98,18 @@ else {
 
   }
 
-  function list_compare($row){
-      echo "id: " . $row["user_contact_data_id"].
-          " - age: " . $row["age"].
-          " - cancer_category: " . $row["cancer_category"].
-          " - religion: " . $row["religion"].
-          " - treatment stage: " . $row["treatment_stage"].
-          " - role to cancer: " . $row["role_to_cancer"].
-          " - gender: " . $row["gender"].
-          "<br>";
-
-  }
     print("\n");
     print($compare1->getpoints());
+    print(" id: ");
+    print ($compare1->getId());
     print("\n");
     print($compare2->getpoints());
+    print(" id: ");
+    print ($compare2->getId());
     print("\n");
     print($compare3->getpoints());
+    print(" id: ");
+    print ($compare3->getId());
     print("\n");
 
   $link->close();
