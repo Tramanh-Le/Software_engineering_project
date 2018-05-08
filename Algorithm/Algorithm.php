@@ -5,8 +5,7 @@
  * Date: 5/1/2018
  * Time: 2:25 PM
  */
-include("Person.php");
-include("NewPerson.php");
+
 class Algorithm
 {
 
@@ -225,7 +224,7 @@ class Algorithm
         Algorithm::calulatePhaseTreatment(Algorithm::getNewphaseTreatment_1(),Algorithm::getNewphaseTreatment_2(),Algorithm::getphaseTreatment_1(),Algorithm::getNewphaseTreatment_2());
         Algorithm::calulateRole(Algorithm::getNewRole(),Algorithm::getRole());
 
-    return  Algorithm::getpoints(); // The highest total points is 240 points - which means that both applicants have everything in common.
+    return  Algorithm::getpoints(); // The highest total points is 225 points - which means that both applicants have everything in common.
 }
 
 }
