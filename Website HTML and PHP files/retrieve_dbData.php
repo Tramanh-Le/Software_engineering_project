@@ -57,6 +57,7 @@ else {
         while($row_new = $result->fetch_assoc()) {
             handle_row($row_new);
             $p1->setPerson($row_new["user_contact_data_id"], $row_new["age"], $row_new["cancer_category"], $row_new["gender"], $row_new["religion"], "TL", $row_new["treatment_stage"], "PT", $row_new["role_to_cancer"]);
+            $p1->setPoints(0);
             $p1->runAlgorithm();
            if ($p1->getId() != $p1->getNewId()) {
                 if ($compare1->getpoints() < $p1->getpoints()) {
@@ -71,7 +72,7 @@ else {
                     $compare3->setPoints($compare2->getpoints());
                     $compare2->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(), $p1->getphaseTreatment_1(), $p1->getphaseTreatment_2(), $p1->getRole());
                     $compare2->setPoints($p1->getpoints());
-                } elseif ($compare3 < $p1->getpoints()) {
+                } elseif ($compare3 ->getpoints() < $p1->getpoints()) {
                     $compare3->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(), $p1->getphaseTreatment_1(), $p1->getphaseTreatment_2(), $p1->getRole());
                     $compare3->setPoints($p1->getpoints());
                 }
@@ -97,21 +98,11 @@ else {
      "<br>";
 
   }
-
     print("\n");
-    print($compare1->getpoints());
-    print(" id: ");
-    print ($compare1->getId());
-    print("\n");
-    print($compare2->getpoints());
-    print(" id: ");
-    print ($compare2->getId());
-    print("\n");
-    print($compare3->getpoints());
-    print(" id: ");
-    print ($compare3->getId());
-    print("\n");
-
+    $p1->printNewperson();
+    $compare1->printPerson();
+    $compare2->printPerson();
+    $compare3->printPerson();
   $link->close();
 
 

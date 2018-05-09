@@ -233,5 +233,49 @@ class Algorithm
 
     return  Algorithm::getpoints(); // The highest total points is 225 points - which means that both applicants have everything in common.
 }
+    public function printNewperson(){
+        print("ID: ");
+        print($this->getnewId());
+        print(" Age: ");
+        print($this->getnewAge());
+        print(" Cancer Type: ");
+        print($this->getNewCancerType());
+        print(" Gender: ");
+        print($this->getGender());
+        print(" Religion: ");
+        print($this->getNewReligion());
+        print(" Treatement Loctation: ");
+        print($this->getNewTreatementLoctation());
+        print( " Phase Treatment 1: ");
+        print($this->getNewphaseTreatment_1());
+        print( " Phase Treatment 2: ");
+        print($this->getNewphaseTreatment_2());
+        print(" Role: ");
+        print($this->getNewRole());
+        print("\n");
+    }
 
+    public function printPerson(){
+        print("ID: ");
+        print($this->getId());
+        print(" Age: ");
+        print($this->getAge());
+        print(" Cancer Type: ");
+        print($this->getCancerType());
+        print(" Gender: ");
+        print($this->getGender());
+        print(" Religion: ");
+        print($this->getReligion());
+        print(" Treatement Loctation: ");
+        print($this->getTreatementLoctation());
+        print( " Phase Treatment 1: ");
+        print($this->getphaseTreatment_1());
+        print( " Phase Treatment 2: ");
+        print($this->getphaseTreatment_2());
+        print(" Role: ");
+        print($this->getRole());
+        print( " Points: ");
+        print($this->getpoints());
+        print("\n");
+    }
 }
