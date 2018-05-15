@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<title>cancercant</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<style>
+  .button {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: solid 1px #1A4575;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: #3A68A1;
+    color: #fee1cc;
+    text-decoration: none;
+    padding: 8px 12px;
+    text-decoration: none;
+    font-size: larger;
+  }
+
+  .button:hover {
+    text-decoration: underline;
+    background: #4479BA;
+    border: solid 1px #20538D;
+  }
+</style>
+
+<body>
+
+  <!-- Header -->
+  <header class="w3-container w3-theme w3-padding" id="myHeader">
+    <div class="w3-center">
+      <h4>Cancer Can't</h4>
+      <h1 class="w3-xxxlarge w3-animate-bottom">The Next: Partnership Program</h1>
+      <div class="w3-padding-32">
+        <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" onclick="window.open('http://www.cancercant.com/','_blank');" style="font-weight:900;">Visit Us</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="w3-row-padding w3-center w3-margin-top">
+    <div class="w3-third">
+      <div class="w3-card w3-container" style="min-height:460px">
+        <h3>Partner #1</h3><br>
+        <p>Age: {{ age1 }}</p>
+        <p>Location: {{ location1 }}</p>
+        <p>Cancer Type: {{ cancertype1 }}</p>
+        <p>Role: {{ role1 }}</p>
+        <p>Religion: {{ religion1 }}</p>
+        <br>
+        <br>
+        <a href="http://www.cancercant.com/" class="button">Connect</a>
+      </div>
+    </div>
+
+    <div class="w3-third">
+      <div class="w3-card w3-container" style="min-height:460px">
+        <h3>Partner #2</h3><br>
+        <p>Age: {{ age2 }}</p>
+        <p>Location: {{ location2 }}</p>
+        <p>Cancer Type: {{ cancertype2 }}</p>
+        <p>Role: {{ role2 }}</p>
+        <p>Religion: {{ religion2 }}</p>
+        <br>
+        <br>
+        <a href="http://www.cancercant.com/" class="button">Connect</a>
+      </div>
+
+    </div>
+
+    <div class="w3-third">
+      <div class="w3-card w3-container" style="min-height:460px">
+        <h3>Partner #3</h3><br>
+        <p>Age: {{ age3 }}</p>
+        <p>Location: {{ location3 }}</p>
+        <p>Cancer Type: {{ cancertype3 }}</p>
+        <p>Role: {{ role3 }}</p>
+        <p>Religion: {{ religion3 }}</p>
+        <br>
+        <br>
+        <a href="http://www.cancercant.com/" class="button">Connect</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
