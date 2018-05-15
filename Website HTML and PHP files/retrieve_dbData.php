@@ -107,36 +107,71 @@ else {
   require 'libs/phpmailer/src/PHPMailer.php';
   require 'libs/phpmailer/src/SMTP.php';
 
-  $mail = new PHPMailer(); // create a new object
-  $mail->IsSMTP(); // enable SMTP
-  $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-  $mail->SMTPAuth = true; // authentication enabled
-  $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-  $mail->Host = "smtp.gmail.com";
-  $mail->Port = 465; // or 587
-  $mail->IsHTML(true);
-  $mail->Username = "9621312@gmail.com";
-  $mail->Password = "2BlueTankJumped!";
-  $mail->SetFrom("9621312@gmail.com");
-  $mail->Subject = "Test";
-  $mail->Body = "hello";
-  $mail->AddAddress("nico@rodester.com");
 
-  $age = $compare1->getAge() . "\r\n";
-  $cancerType = $compare1->getCancerType();
-  $roleToCancer = $compare1->getRole();
-  $treatmentLocation = $compare1->getTreatementLoctation();
+  $variables = array();
+  $variables = get_patient_info_for_html($variables, $compare1, $compare2, $compare3);
+
+
+  $template = file_get_contents("contents.html");
+
+  foreach($variables as $key => $value)
+  {
+      echo "KEY : " . $value;
+      $template = str_replace('{{ '.$key.' }}', $value, $template);
+  }
+
+  send_email_with_info($template);
 
 
 
-  $mail->Body = "Name : John Doe " . PHP_EOL .
-  "Age : {$age} \r\n" . PHP_EOL .
-  "Cancer Type : {$cancerType} \r\n" . PHP_EOL .
-  "Role to Cancer : {$roleToCancer}";
+  function get_patient_info_for_html($variables, $compare1, $compare2, $compare3)
+  {
+    $variables['location1'] = $compare1->getTreatementLoctation();
+    $variables['cancertype1'] = $compare1->getCancerType();
+    $variables['age1'] = $compare1->getAge();
+    $variables['religion1'] = $compare1->getReligion();
+    $variables['role1'] = $compare1->getRole();
+    $variables['cancertype2'] = $compare2->getCancerType();
+    $variables['location2'] = $compare2->getTreatementLoctation();
+    $variables['age2'] = $compare2->getAge();
+    $variables['religion2'] = $compare2->getReligion();
+    $variables['role2'] = $compare2->getRole();
+    $variables['cancertype3'] = $compare3->getCancerType();
+    $variables['age3'] = $compare3->getAge();
+    $variables['religion3'] = $compare3->getReligion();
+    $variables['role3'] = $compare3->getRole();
+    $variables['location3'] = $compare3->getTreatementLoctation();
 
-   if(!$mail->Send()) {
-      echo "Mailer Error: " . $mail->ErrorInfo;
-   } else {
-      echo "Message has been sent";
-   }
+    return $variables;
+  }
+
+
+  function send_email_with_info($template)
+  {
+    $mail = new PHPMailer(); // create a new object
+    $mail->IsSMTP(); // enable SMTP
+    $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+    $mail->SMTPAuth = true; // authentication enabled
+    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+    $mail->Host = "smtp.gmail.com";
+    $mail->Port = 465; // or 587
+    $mail->IsHTML(true);
+    $mail->Username = "9621312@gmail.com";
+    $mail->Password = "2BlueTankJumped!";
+    $mail->SetFrom("9621312@gmail.com");
+    $mail->Subject = "Test";
+    $mail->Body = "hello";
+    $mail->AddAddress("nico@rodester.com");
+
+
+    $mail->Body = $template;
+
+     if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+     } else {
+        echo "Message has been sent";
+     }
+
+  }
+
   ?>
