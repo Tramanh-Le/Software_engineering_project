@@ -18,6 +18,38 @@ if ($link->connect_error) {
 }
 else {
   echo "Connection successfully";
+  echo"\n"
+;
+}
+$age = $cancer_type = $religious = $phase_treatment=$gender=$role ="";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    #<------------------------user_contact_data---------------->
+   echo $age =$_POST["age"];
+  echo  $cancer_type = $_POST["cancer-category"];
+   echo $phase_treatment= $_POST["treatment_phase"];
+    echo $religious=$_POST["religion"];
+    echo $role=$_POST["your_role"];
+   echo $gender=$_POST["gender"];
+
+}
+echo("\n");
+echo($age);
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+$sql = "INSERT INTO user_features (age,cancer_category,treatment_stage,religion,role_to_cancer,gender)
+    VALUES ('$age','$cancer_type','$phase_treatment','$religious','$role','$gender')";
+
+if ($link->query($sql) === TRUE) {
+    echo "New record created successfully";
+
+} else {
+    echo "Error: " . $sql . "<br>" . $link->error;
 }
 
 // Select all rows from the databse
@@ -70,7 +102,8 @@ else {
                 } elseif ($compare2->getpoints() < $p1->getpoints()) {
                     $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(), $compare2->getReligion(), $compare2->getTreatementLoctation(), $compare2->getphaseTreatment_1(), $compare2->getphaseTreatment_2(), $compare2->getRole());
                     $compare3->setPoints($compare2->getpoints());
-                    $compare2->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(), $p1->getphaseTreatment_1(), $p1->getphaseTreatment_2(), $p1->getRole());
+                    $compare2->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(),
+                                            $p1->getphaseTreatment_1(), $p1->getphaseTreatment_2(), $p1->getRole());
                     $compare2->setPoints($p1->getpoints());
                 } elseif ($compare3 ->getpoints() < $p1->getpoints()) {
                     $compare3->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(), $p1->getphaseTreatment_1(), $p1->getphaseTreatment_2(), $p1->getRole());
@@ -98,34 +131,39 @@ else {
      "<br>";
 
   }
+    print("\n");
+    $p1->printNewperson();
+    $compare1->printPerson();
+    $compare2->printPerson();
+    $compare3->printPerson();
 
-  use PHPMailer\PHPMailer\PHPMailer;
-  use PHPMailer\PHPMailer\Exception;
-  use PHPMailer\PHPMailer\STMP;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\STMP;
 
-  require 'libs/phpmailer/src/Exception.php';
-  require 'libs/phpmailer/src/PHPMailer.php';
-  require 'libs/phpmailer/src/SMTP.php';
-
-
-  $variables = array();
-  $variables = get_patient_info_for_html($variables, $compare1, $compare2, $compare3);
-
-
-  $template = file_get_contents("contents.html");
-
-  foreach($variables as $key => $value)
-  {
-      echo "KEY : " . $value;
-      $template = str_replace('{{ '.$key.' }}', $value, $template);
-  }
-
-  send_email_with_info($template);
+require 'libs/phpmailer/src/Exception.php';
+require 'libs/phpmailer/src/PHPMailer.php';
+require 'libs/phpmailer/src/SMTP.php';
 
 
+$variables = array();
+$variables = get_patient_info_for_html($variables, $compare1, $compare2, $compare3);
 
-  function get_patient_info_for_html($variables, $compare1, $compare2, $compare3)
-  {
+
+$template = file_get_contents("contents.html");
+
+foreach($variables as $key => $value)
+{
+    echo "KEY : " . $value;
+    $template = str_replace('{{ '.$key.' }}', $value, $template);
+}
+
+send_email_with_info($template);
+
+
+
+function get_patient_info_for_html($variables, $compare1, $compare2, $compare3)
+{
     $variables['location1'] = $compare1->getTreatementLoctation();
     $variables['cancertype1'] = $compare1->getCancerType();
     $variables['age1'] = $compare1->getAge();
@@ -143,11 +181,11 @@ else {
     $variables['location3'] = $compare3->getTreatementLoctation();
 
     return $variables;
-  }
+}
 
 
-  function send_email_with_info($template)
-  {
+function send_email_with_info($template)
+{
     $mail = new PHPMailer(); // create a new object
     $mail->IsSMTP(); // enable SMTP
     $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
@@ -161,17 +199,24 @@ else {
     $mail->SetFrom("9621312@gmail.com");
     $mail->Subject = "Test";
     $mail->Body = "hello";
-    $mail->AddAddress("nico@rodester.com");
+    $mail->AddAddress("shadow4040@live.com");
 
 
     $mail->Body = $template;
 
-     if(!$mail->Send()) {
+    if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
-     } else {
+    } else {
         echo "Message has been sent";
-     }
+    }
 
-  }
+}
 
-  ?>
+
+
+$link->close();
+
+
+
+
+ ?>
