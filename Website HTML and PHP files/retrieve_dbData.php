@@ -23,6 +23,7 @@ else {
 }
 $age = $cancer_type = $religious = $phase_treatment=$gender=$role ="";
 $first=$last=$email=$treatmentPhase=$location="";
+$city=$state=$phone="";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     #<------------------------user_contact_data---------------->
@@ -35,6 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo $email=$_POST["email"];
     echo  $treatmentPhase=$_POST{"treatment_phase"};
     echo $location=["treatment_city"];
+    echo $city=["home_city"];
+    echo $state=["home_state"];
+    echo $phone = ["phone"];
 
 }
 echo("\n");
@@ -48,6 +52,10 @@ function test_input($data) {
 $matched="F";
 $sql = "INSERT INTO user_features (age,cancer_category,religion,treatment_stage,gender,role_to_cancer,first_name,last_name,treatment_location,is_matched);
     VALUES ('$age','$cancer_type','$religious','$treatmentPhase','$gender''$role','$first','$last','$location','$matched')";
+
+$sql = "INSERT INTO  user_contact_data(first_name,last_name,city,state,phone,email);
+    VALUES ('$first','$last','$city','$state','$phone','$email')";
+
 
 if ($link->query($sql) === TRUE) {
     echo "New record created successfully";
