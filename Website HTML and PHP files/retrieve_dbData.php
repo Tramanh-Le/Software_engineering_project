@@ -221,7 +221,7 @@ function send_email_with_info($template)
     $mail->SetFrom("9621312@gmail.com");
     $mail->Subject = "Test";
     $mail->Body = "hello";
-    $mail->AddAddress("shadow4040@live.com");
+    $mail->AddAddress("nico@rodester.com");
 
 
     $mail->Body = $template;
