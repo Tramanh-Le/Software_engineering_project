@@ -16,14 +16,13 @@ class Algorithm
     private $Newgender;
     private $Newreligion;
     private $NewTreatmentLocation;
-    private $NewphaseTreatment_1;
-    private $NewphaseTreatment_2;
     private $Newrole;
     private $NewId;
     private $NewFirstName;
     private $NewLastName;
     private $NewEmail;
     private $NewTreatmentPhase;
+    private $NewMatched;
 
     // variables for comparator
     private $cancerType;
@@ -31,14 +30,13 @@ class Algorithm
     private $gender;
     private $religion;
     private $TreatmentLocation;
-    private $phaseTreatment_1;
-    private $phaseTreatment_2;
     private $role;
     private $Id;
     private $FirstName;
     private $LastName;
     private $email;
     private $treatementPahse;
+    private $matched;
 
 
     private $points;
@@ -47,8 +45,8 @@ class Algorithm
     {
     }
 
-    public function setNewPerson($Id,$age, $CancerType, $gender, $religion, $TreatmentLocation, $PhaseTreatment_1,
-                                 $PhaseTreament_2, $Role,$first,$last,$email,$treatment)
+    public function setNewPerson($Id,$age, $CancerType, $gender, $religion, $TreatmentLocation,
+                                 $Role,$first,$last,$email,$treatment,$matched)
     {
         $this->setNewId($Id);
         $this->setNewAge($age);
@@ -56,17 +54,15 @@ class Algorithm
         $this->setNewGender($gender);
         $this->setNewReligion($religion);
         $this->setNewTreatmentLocation($TreatmentLocation);
-        $this->setNewPhaseTreatment_1($PhaseTreatment_1);
-        $this->setNewPhaseTreatment_2($PhaseTreament_2);
         $this->setNewRole($Role);
         $this->setNewFirstName($first);
         $this->setNewLastName($last);
         $this->setNewEmail($email);
         $this->setNewTreatmentPhase($treatment);
+        $this->setNewMatched($matched);
     }
 
-    public function setPerson($id,$age, $CancerType, $gender, $religion, $TreatmentLocation, $PhaseTreatment_1,
-                              $PhaseTreament_2, $Role,$first,$last,$email,$treatment)
+    public function setPerson($id,$age, $CancerType, $gender, $religion, $TreatmentLocation,$Role,$first,$last,$email,$treatment,$matched)
     {
         $this->setId($id);
         $this->setAge($age);
@@ -74,13 +70,12 @@ class Algorithm
         $this->setGender($gender);
         $this->setReligion($religion);
         $this->setTreatmentLocation($TreatmentLocation);
-        $this->setPhaseTreatment_1($PhaseTreatment_1);
-        $this->setPhaseTreatment_2($PhaseTreament_2);
         $this->setRole($Role);
         $this->setFirstName($first);
         $this->setLastName($last);
         $this->setEmail($email);
         $this->setTreatmentPhase($treatment);
+        $this->setMatched($matched);
     }
 
 
@@ -90,14 +85,13 @@ class Algorithm
     public function getNewGender(){return $this->Newgender;}
     public function getNewReligion(){return $this->Newreligion;}
     public function getNewTreatementLoctation(){return $this->NewTreatmentLocation;}
-    public function getNewphaseTreatment_1(){return $this->NewphaseTreatment_1;}
-    public function getNewphaseTreatment_2(){return $this->NewphaseTreatment_2;}
     public function getNewRole(){return $this->Newrole;}
     public function getNewId(){return $this ->NewId;}
     public function getNewFirstName(){return $this->NewFirstName;}
     public function getNewLastName(){return $this->NewLastName;}
     public function getNewEmail(){return $this->NewEmail;}
     public function getNewTreatmentPhase(){return $this->NewTreatmentPhase;}
+    public function getNewMachted(){return $this->NewMatched;}
 
     // assigns the points to each comparator category
     public function getpoints(){return $this->points;}
@@ -108,22 +102,19 @@ class Algorithm
     public function getGender(){return $this->gender;}
     public function getReligion(){return $this->religion;}
     public function getTreatementLoctation(){return $this->TreatmentLocation;}
-    public function getphaseTreatment_1(){return $this->phaseTreatment_1;}
-    public function getphaseTreatment_2(){return $this->phaseTreatment_2;}
     public function getRole(){return $this->role;}
     public function getId(){return $this-> Id;}
     public function getFirstName(){return $this->FirstName;}
     public function getLastName(){return $this->LastName;}
     public function getEmail(){return $this->email;}
     public function getTreatmentPhase(){return $this->treatementPahse;}
+    public function getMachted(){return $this->matched;}
     // setters for all variables in the class
     public function setNewCancerType($c){$this->NewcancerType = $c;}
     public function setNewAge($a){$this->Newage = $a;}
     public function setNewGender($g){$this->Newgender = $g;}
     public function setNewReligion($r){$this->Newreligion = $r;}
-    public function setNewTreatmentLocation($TL){}
-    public function setNewPhaseTreatment_1($PT){$this->NewphaseTreatment_1 = $PT;}
-    public function setNewPhaseTreatment_2($PT){$this->NewphaseTreatment_2 = $PT;}
+    public function setNewTreatmentLocation($TL){$this->NewTreatmentLocation=$TL;}
     public function setNewRole($r){$this->Newrole = $r;}
     public function setPoints($p){$this->points = $p;}
     public function setNewId($id){$this ->NewId = $id;}
@@ -131,6 +122,7 @@ class Algorithm
     public function setNewLastName($name){$this->NewLastName=$name;}
     public function setNewEmail($e){$this->NewEmail=$e;}
     public function setNewTreatmentPhase($T){$this->NewTreatmentPhase=$T;}
+    public function setNewMatched($m){$this->NewMatched=$m;}
 
     // assigning the point system
     public function setCancerType($c){$this->cancerType = $c;}
@@ -142,13 +134,11 @@ class Algorithm
     public function setLastName($name){$this->LastName=$name;}
     public function setEmail($e){$this->Email=$e;}
     public function setTreatmentPhase($T){$this->TreatmentPhase=$T;}
+    public function setMatched($m){$this->matched=$m;}
     // setters for point-system algorithm
-    public function setTreatmentLocation($TL)
-    {$this->TreatmentLocation = $TL;}
+    public function setTreatmentLocation($TL){$this->TreatmentLocation = $TL;}
     // setters for Treatment Phase: The cancer stage in which the applicant is currently experiencing
     // Phase Treatment 1 and 2 are two available options an applicant can select from the application
-    public function setPhaseTreatment_1($PT){$this->phaseTreatment_1 = $PT;}
-    public function setPhaseTreatment_2($PT){$this->phaseTreatment_2 = $PT;}
     // setter for the Applicant Role when applying: Patient, Spouse, Parent, Sibling, Caregiver, Widower, etc
     public function setRole($r){$this->role = $r;}
 
@@ -224,23 +214,6 @@ class Algorithm
         $this->setPoints($Newpoints);
     }
 
-    // Phase Treatment is the matching between applicants and the other person already in the system
-    public function calulatePhaseTreatment($newPT_1, $newPT_2, $PT_1, $PT_2)
-    {
-        $Newpoints = 0;
-        // Assign 20 points for applicants who are looking for the same TWO types of treatment phase the other person is in
-        if (($newPT_1 == $PT_1 & $newPT_2 == $PT_2) || ($newPT_1 == $PT_2 & $newPT_2 == $PT_1))
-            $Newpoints = 20;
-        // Assign 10 points for applicants who matched in ONE types of treatment phase the other person is in
-        else if ($newPT_1 == $PT_1 || $newPT_1 == $PT_2 || $newPT_2 == $PT_2 || $newPT_2 == $PT_2)
-            $Newpoints = 10;
-        else // Assign zero points for those who do not have Phase of Treatment in common
-            $Newpoints = 0;
-
-        $Newpoints = Algorithm::getpoints() + $Newpoints;
-        $this->setPoints($Newpoints);;
-    }
-
     // Calculating the point system for the role the applicant is looking for in the matched person
     public function calulateRole($newRole, $Role){
         $Newpoints=0;
@@ -258,7 +231,7 @@ public function calulateTreatmentphase($newTreat,$treat)
 {
     $Newpoints=0;
     if ($newTreat == $treat) // Assign 10 points for matched pairs that share the same treatmentphase
-        $Newpoints = 10;
+        $Newpoints = 20;
     else
         $Newpoints = 0;
 
@@ -273,7 +246,6 @@ public function calulateTreatmentphase($newTreat,$treat)
         Algorithm::calulateGender(Algorithm::getNewGender(),Algorithm::getGender());
         Algorithm::calulateReligion(Algorithm::getNewReligion(),Algorithm::getReligion());
         Algorithm::calulateTreatmentLocation(Algorithm::getNewTreatementLoctation(),Algorithm::getTreatementLoctation());
-        Algorithm::calulatePhaseTreatment(Algorithm::getNewphaseTreatment_1(),Algorithm::getNewphaseTreatment_2(),Algorithm::getphaseTreatment_1(),Algorithm::getNewphaseTreatment_2());
         Algorithm::calulateRole(Algorithm::getNewRole(),Algorithm::getRole());
 
     return  Algorithm::getpoints(); // The highest total points is 225 points - which means that both applicants have everything in common.
@@ -291,10 +263,6 @@ public function calulateTreatmentphase($newTreat,$treat)
         print($this->getNewReligion());
         print(" Treatement Loctation: ");
         print($this->getNewTreatementLoctation());
-        print( " Phase Treatment 1: ");
-        print($this->getNewphaseTreatment_1());
-        print( " Phase Treatment 2: ");
-        print($this->getNewphaseTreatment_2());
         print(" Role: ");
         print($this->getNewRole());
         print("\n");
@@ -322,9 +290,6 @@ public function calulateTreatmentphase($newTreat,$treat)
         print(" Treatement Loctation: ");
         print($this->getTreatementLoctation());
         print( " Phase Treatment 1: ");
-        print($this->getphaseTreatment_1());
-        print( " Phase Treatment 2: ");
-        print($this->getphaseTreatment_2());
         print(" Role: ");
         print($this->getRole());
         print( " Points: ");
