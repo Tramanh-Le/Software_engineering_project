@@ -2,11 +2,11 @@
 include ("Algorithm.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-  $servername = 'cancercant-1.cpbyr2656phb.us-west-2.rds.amazonaws.com';
+  $servername = 'cancer-cant.cerorole96a1.us-west-2.rds.amazonaws.com';
   $username = 'root';
   $password = 'cancercant';
-  $database = 'cancercant';
-  $port = 2801;
+  $database = 'UserFeatures';
+  $port = 3306;
 
 
 // Create connection
@@ -168,17 +168,23 @@ function get_patient_info_for_html($variables, $compare1, $compare2, $compare3)
     $variables['cancertype1'] = $compare1->getCancerType();
     $variables['age1'] = $compare1->getAge();
     $variables['religion1'] = $compare1->getReligion();
+    #$varialbes['treatment_stage1'] = $compare1->getphaseTreatment_1();
     $variables['role1'] = $compare1->getRole();
+    $variables['id1'] = $compare1->getId();
     $variables['cancertype2'] = $compare2->getCancerType();
     $variables['location2'] = $compare2->getTreatementLoctation();
     $variables['age2'] = $compare2->getAge();
     $variables['religion2'] = $compare2->getReligion();
     $variables['role2'] = $compare2->getRole();
+    $variables['id2'] = $compare2->getId();
+    #$varialbes['treatment_stage2'] = $compare2->getphaseTreatment_1();
     $variables['cancertype3'] = $compare3->getCancerType();
     $variables['age3'] = $compare3->getAge();
     $variables['religion3'] = $compare3->getReligion();
     $variables['role3'] = $compare3->getRole();
     $variables['location3'] = $compare3->getTreatementLoctation();
+    $variables['id3'] = $compare3->getId();
+    #$varialbes['treatment_stage3'] = $compare3->getphaseTreatment_1();
 
     return $variables;
 }
