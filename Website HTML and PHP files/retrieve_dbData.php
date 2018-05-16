@@ -34,11 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo $first=$_POST["name_first"];
     echo $last=$_POST["name_last"];
     echo $email=$_POST["email"];
-    echo  $treatmentPhase=$_POST{"treatment_phase"};
-    echo $location=["treatment_city"];
-    echo $city=["home_city"];
-    echo $state=["home_state"];
-    echo $phone = ["phone"];
+    echo $treatmentPhase=$_POST["treatment_phase"];
+    echo $location=$_POST["treatment_city"];
+    echo $city=$_POST["home_city"];
+    echo $state=$_POST["home_state"];
+    echo $phone =$_POST["phone"];
+    echo $cancer_type=$_POST["cancer-category"];
 
 }
 echo("\n");
@@ -50,12 +51,26 @@ function test_input($data) {
     return $data;
 }
 $matched="F";
-$sql = "INSERT INTO user_features (age,cancer_category,religion,treatment_stage,gender,role_to_cancer,first_name,last_name,treatment_location,is_matched);
-    VALUES ('$age','$cancer_type','$religious','$treatmentPhase','$gender''$role','$first','$last','$location','$matched')";
+$matched_2="0";
 
-$sql = "INSERT INTO  user_contact_data(first_name,last_name,city,state,phone,email);
-    VALUES ('$first','$last','$city','$state','$phone','$email')";
 
+$sql_2 = "INSERT INTO  UserFeatures.user_contact_data(first_name,last_name,city,state,phone,email,matched_flag)
+    VALUES ('$first','$last','$city','$state','$phone','$email','$matched_2')";
+
+if ($link->query($sql_2) === TRUE) {
+    echo "New record created successfully";
+
+} else {
+    echo "Error: " . $sql_2 . "<br>" . $link->error;
+}
+$id = "SELECT * From user_contact_data Order by id DESC Limit 1";
+$getId = $link -> query($id);
+
+while($row = $getId->fetch_assoc()) {
+    $setid = $row["id"];
+}
+$sql = "INSERT INTO UserFeatures.user_features(user_contact_data_id,age,cancer_category,distance,religion,treatment_stage,gender,role_to_cancer,first_name,last_name,treatment_location,is_matched,is_matched_to_user)
+    VALUES ('$setid','$age','$cancer_type','0','$religious','$treatmentPhase','$gender','$role','$first','$last','$location','$matched','$matched_2')";
 
 if ($link->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -64,13 +79,14 @@ if ($link->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $link->error;
 }
 
+
 // Select all rows from the databse
 $query = "SELECT * FROM user_features";
 //execute query
 $result = $link->query($query);
 $last="SELECT * From user_features Order by user_contact_data_id DESC Limit 1";
 $last_result = $link->query($last);
-$last_id="SELECT user_contact_data_id From user_features Order by user_contact_data_id DESC Limit 1";
+$last_id="SELECT ID From user_features Order by user_contact_data_id DESC Limit 1";
 $last_id_result = $link->query($last);
 
 $p1 = new Algorithm();
@@ -93,7 +109,7 @@ elseif ($last_result->num_rows > 0) {
     while($row = $last_result->fetch_assoc()) {
         handle_row($row);
         $p1 -> setNewPerson($row["user_contact_data_id"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],$row["treatment_location"],
-                                 $row["role_to_cancer"],$row["First_Name"],$row["Last_Name"],$row["Email"],$row["TreatmentPhase"],$row["is_matched"]);
+                                 $row["role_to_cancer"],$row["first_name"],$row["last_name"],$row["email"],$row["treatment_stage"],$row["is_matched"]);
         print("\n");
         print($p1->getNewAge());
         print("\n");
@@ -102,7 +118,7 @@ elseif ($last_result->num_rows > 0) {
         while($row_new = $result->fetch_assoc()) {
             handle_row($row_new);
             $p1->setPerson($row_new["user_contact_data_id"], $row_new["age"], $row_new["cancer_category"], $row_new["gender"], $row_new["religion"], $row_new["treatment_location"],
-                            $row_new["role_to_cancer"],$row_new["First_Name"],$row_new["Last_Name"],$row_new["Email"],$row_new["TreatmentPhase"],$row_new["is_matched"]);
+                            $row_new["role_to_cancer"],$row_new["first_name"],$row_new["last_name"],$row_new["Email"],$row_new["treatment_stage"],$row_new["is_matched"]);
             $p1->setPoints(0);
             if($p1->getMachted()=="F" || $p1->getMachted()=="f") {
                 $p1->runAlgorithm();
