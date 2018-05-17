@@ -24,6 +24,7 @@ else {
 $age = $cancer_type = $religious = $phase_treatment=$gender=$role ="";
 $first=$last=$email=$treatmentPhase=$location="";
 $city=$state=$phone="";
+$test_phase="";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     #<------------------------user_contact_data---------------->
@@ -40,7 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo $state=$_POST["home_state"];
     echo $phone =$_POST["phone"];
     echo $cancer_type=$_POST["cancer-category"];
-
+    echo "THIS IS YOUR PHASE OF TREATMENT: ";
+    echo implode("|", $test_phase=$_POST['target_phase']);
+    echo "THIS IS YOUR goal: ";
+    echo implode("|", $test_goal=$_POST['target_goal']);
 }
 echo("\n");
 echo($age);
@@ -80,14 +84,18 @@ if ($link->query($sql) === TRUE) {
 }
 
 
+
 // Select all rows from the databse
-$query = "SELECT * FROM user_features";
+$query = "SELECT * From user_features
+inner join user_contact_data where user_contact_data_id = user_contact_data.id";
 //execute query
 $result = $link->query($query);
-$last="SELECT * From user_features Order by user_contact_data_id DESC Limit 1";
+$last="SELECT * From user_features
+inner join user_contact_data where user_contact_data_id = user_contact_data.id
+order by user_contact_data_id desc limit 1";
 $last_result = $link->query($last);
-$last_id="SELECT ID From user_features Order by user_contact_data_id DESC Limit 1";
-$last_id_result = $link->query($last);
+echo "EMAIL: ";
+echo $result->fetch_assoc()['email'];
 
 $p1 = new Algorithm();
 $compare1=new Algorithm();
@@ -107,20 +115,19 @@ if (!mysqli_query($link,$query)) {
 elseif ($last_result->num_rows > 0) {
     // output data of each row
     while($row = $last_result->fetch_assoc()) {
-        handle_row($row);
+        //handle_row($row);
+        //echo "Row handeled";
         $p1 -> setNewPerson($row["user_contact_data_id"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],$row["treatment_location"],
                                  $row["role_to_cancer"],$row["first_name"],$row["last_name"],$row["email"],$row["treatment_stage"],$row["is_matched"]);
-        print("\n");
-        print($p1->getNewAge());
-        print("\n");
     }
     if($result->num_rows > 0)
         while($row_new = $result->fetch_assoc()) {
-            handle_row($row_new);
+            //handle_row($row_new);
             $p1->setPerson($row_new["user_contact_data_id"], $row_new["age"], $row_new["cancer_category"], $row_new["gender"], $row_new["religion"], $row_new["treatment_location"],
-                            $row_new["role_to_cancer"],$row_new["first_name"],$row_new["last_name"],$row_new["Email"],$row_new["treatment_stage"],$row_new["is_matched"]);
+                            $row_new["role_to_cancer"],$row_new["first_name"],$row_new["last_name"],$row_new["email"],$row_new["treatment_stage"],$row_new["is_matched"]);
             $p1->setPoints(0);
-            if($p1->getMachted()=="F" || $p1->getMachted()=="f") {
+            //$p1->printPerson();
+            if($p1->getMachted()=="0" || $p1->getMachted()==0) {
                 $p1->runAlgorithm();
                 if ($p1->getId() != $p1->getNewId()) {
                     if ($compare1->getpoints() < $p1->getpoints()) {
@@ -172,8 +179,10 @@ function handle_row($row ) {
         "<br>";
 
 }
-print("\n");
+echo "We made it here";
 $p1->printNewperson();
+echo "---------";
+echo $compare1->getId();
 $compare1->printPerson();
 $compare2->printPerson();
 $compare3->printPerson();
@@ -208,10 +217,14 @@ function get_patient_info_for_html($variables, $compare1, $compare2, $compare3)
     $variables['location1'] = $compare1->getTreatementLoctation();
     $variables['cancertype1'] = $compare1->getCancerType();
     $variables['age1'] = $compare1->getAge();
+    $variables['firstname1'] = $compare1->getFirstName();
+    $variables['lastname1'] = $compare1->getLastName();
     $variables['religion1'] = $compare1->getReligion();
     #$varialbes['treatment_stage1'] = $compare1->getphaseTreatment_1();
     $variables['role1'] = $compare1->getRole();
     $variables['id1'] = $compare1->getId();
+    $variables['firstname2'] = $compare2->getFirstName();
+    $variables['lastname2'] = $compare2->getLastName();
     $variables['cancertype2'] = $compare2->getCancerType();
     $variables['location2'] = $compare2->getTreatementLoctation();
     $variables['age2'] = $compare2->getAge();
@@ -220,6 +233,8 @@ function get_patient_info_for_html($variables, $compare1, $compare2, $compare3)
     $variables['id2'] = $compare2->getId();
     #$varialbes['treatment_stage2'] = $compare2->getphaseTreatment_1();
     $variables['cancertype3'] = $compare3->getCancerType();
+    $variables['firstname3'] = $compare3->getFirstName();
+    $variables['lastname3'] = $compare3->getLastName();
     $variables['age3'] = $compare3->getAge();
     $variables['religion3'] = $compare3->getReligion();
     $variables['role3'] = $compare3->getRole();
