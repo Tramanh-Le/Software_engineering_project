@@ -43,7 +43,7 @@ class Algorithm
     private $matched;
     private $city;
     private $state;
-    
+
 
 
     private $points;
@@ -161,7 +161,7 @@ class Algorithm
     public function setCity($c){$this->city=$c;}
     public function setState($s){$this->state=$s;}
     // setters for point-system algorithm
-    public function setTreatmentCity($TL){$this->treatmentCity = $TL;} 
+    public function setTreatmentCity($TL){$this->treatmentCity = $TL;}
     public function setTreatmentState($TL){$this->treatmentState = $TL;}
     // setters for Treatment Phase: The cancer stage in which the applicant is currently experiencing
     // Phase Treatment 1 and 2 are two available options an applicant can select from the application
@@ -179,8 +179,8 @@ class Algorithm
           //  $Newpoints = 20; // If the age difference between matched pairs is between 6 and 10 years, the algorithm assigns the pair 20 points
         //else if (age <= 15)
           //  $Newpoints = 10; // If the age difference between matched pairs is between 11 and 15 years, the algorithm assigns the pair 10 points
-        //else
-//            $Newpoints = 0; // If the age is out of range above 15 years, assign no points
+        else
+            $Newpoints = 0; // If the age is out of range above 15 years, assign no points
 
         $Newpoints = Algorithm::getpoints() + $Newpoints;
         $this->setPoints($Newpoints);
@@ -205,7 +205,7 @@ class Algorithm
     {
         $Newpoints = 0;
         if ($newGender == $Gender) // If the gender are the same, assign 20 points.
-            $Newpoints = 20;
+            $Newpoints = 30;
         else
             $Newpoints = 0; // If gender do not match, no points assigned.
 
@@ -218,7 +218,7 @@ class Algorithm
     {
         $Newpoints = 0;
         if ($newReligion == $Religion) // Assign 15 points if the religion matches
-            $Newpoints = 15;
+            $Newpoints = 25;
         else
             $Newpoints = 0; // If religion do not match, no points are assigned
 
@@ -232,7 +232,7 @@ class Algorithm
     {
         $Newpoints = 0;
         if ($newTL == $TL) // Assign 20 points for applicants who receive treatment from the same location
-            $Newpoints = 20;
+            $Newpoints = 15;
         else
             $Newpoints = 0; // Assign no points if location do not match
 
@@ -244,18 +244,18 @@ class Algorithm
     {
         $Newpoints = 0;
         if ($newTL == $TL) // Assign 20 points for applicants who receive treatment from the same location
-            $Newpoints = 20;
+            $Newpoints = 10;
         else
             $Newpoints = 0; // Assign no points if location do not match
 
         $Newpoints = Algorithm::getpoints() + $Newpoints;
         $this->setPoints($Newpoints);
     }
-    
+
     public function calulateCity($newCity,$city){
         $Newpoints = 0;
         if ($newCity == $city) // Assign 20 points for applicants who receive treatment from the same location
-            $Newpoints = 20;
+            $Newpoints = 15;
         else
             $Newpoints = 0; // Assign no points if location do not match
 
@@ -266,7 +266,7 @@ class Algorithm
     public function calulateState($newState,$state){
         $Newpoints = 0;
         if ($newState == $state) // Assign 20 points for applicants who receive treatment from the same location
-            $Newpoints = 20;
+            $Newpoints = 10;
         else
             $Newpoints = 0; // Assign no points if location do not match
 
@@ -278,7 +278,7 @@ class Algorithm
         $Newpoints=0;
 
         if($newRole == $Role) // Assign 10 points for matched pairs that share the same role
-            $Newpoints = 10;
+            $Newpoints = 15;
         else
             $Newpoints = 0;
 
