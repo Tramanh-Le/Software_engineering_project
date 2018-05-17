@@ -113,14 +113,14 @@ elseif ($last_result->num_rows > 0) {
         //echo "Row handeled";
         $p1 -> setNewPerson($row["ID"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],
                             $row["treatment_city"],$row["treatment_state"], $row["role_to_cancer"],$row["first_name"],
-                            $row["last_name"],$row["email"], $row["treatment_stage"],$row["is_matched"],$row["city"],$row["state"]);
+                            $row["last_name"],$row["email"], $row["treatment_stage"],$row["is_matched"]);
     }
     if($result->num_rows > 0)
         while($row_new = $result->fetch_assoc()) {
             //handle_row($row_new);
             $p1 -> setNewPerson($row["ID"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],
                                 $row["treatment_city"],$row["treatment_state"], $row["role_to_cancer"],$row["first_name"],
-                                $row["last_name"],$row["email"], $row["treatment_stage"],$row["is_matched"],$row["city"],$row["state"]);
+                                $row["last_name"],$row["email"], $row["treatment_stage"],$row["is_matched"]);
             $p1->setPoints(0);
             //$p1->printPerson();
             if($p1->getMachted()=="0" || $p1->getMachted()==0) {
@@ -130,24 +130,21 @@ elseif ($last_result->num_rows > 0) {
                         $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(),
                                              $compare2->getReligion(), $compare2->getTreatementCity(),$compare2->getTreatementState(),
                                              $compare2->getRole(), $compare2->getFirstName(), $compare2->getNewLastName(),
-                                             $compare2->getEmail(), $compare2->getTreatmentPhase(), $compare2->getMachted(),
-                                             $compare2->getcity(),$compare2->getState());
+                                             $compare2->getEmail(), $compare2->getTreatmentPhase(), $compare2->getMachted());
 
                         $compare3->setPoints($compare2->getpoints());
 
                         $compare2->setPerson($compare1->getId(), $compare1->getAge(), $compare1->getCancerType(), $compare1->getGender(),
                                              $compare1->getReligion(), $compare1->getTreatementCity(),$compare1->getTreatementState(),
                                              $compare1->getRole(), $compare1->getFirstName(), $compare1->getNewLastName(),
-                                             $compare1->getEmail(), $compare1->getTreatmentPhase(), $compare1->getMachted(),
-                                             $compare1->getcity(),$compare1->getState());
+                                             $compare1->getEmail(), $compare1->getTreatmentPhase(), $compare1->getMachted());
 
                         $compare2->setPoints($compare1->getpoints());
 
                         $compare1->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(),
                                              $p1->getReligion(), $p1->getTreatementCity(),$p1->getTreatementState(),
                                              $p1->getRole(), $p1->getFirstName(), $p1->getNewLastName(),
-                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted(),
-                                             $p1->getcity(),$p1->getState());
+                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted());
 
                         $compare1->setPoints($p1->getpoints());
                         }
@@ -155,16 +152,14 @@ elseif ($last_result->num_rows > 0) {
                         $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(),
                                              $compare2->getReligion(), $compare2->getTreatementCity(),$compare2->getTreatementState(),
                                              $compare2->getRole(), $compare2->getFirstName(), $compare2->getNewLastName(),
-                                             $compare2->getEmail(), $compare2->getTreatmentPhase(), $compare2->getMachted(),
-                                             $compare2->getcity(),$compare2->getState());
+                                             $compare2->getEmail(), $compare2->getTreatmentPhase(), $compare2->getMachted());
 
                         $compare3->setPoints($compare2->getpoints());
 
                         $compare2->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(),
                                              $p1->getReligion(), $p1->getTreatementCity(),$p1->getTreatementState(),
                                              $p1->getRole(), $p1->getFirstName(), $p1->getNewLastName(),
-                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted(),
-                                             $p1->getcity(),$p1->getState());
+                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted());
 
                         $compare2->setPoints($p1->getpoints());
                         }
@@ -172,8 +167,7 @@ elseif ($last_result->num_rows > 0) {
                         $compare3->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(),
                                              $p1->getReligion(), $p1->getTreatementCity(),$p1->getTreatementState(),
                                              $p1->getRole(), $p1->getFirstName(), $p1->getNewLastName(),
-                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted(),
-                                             $p1->getcity(),$p1->getState());
+                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted());
 
                         $compare3->setPoints($p1->getpoints());
                     }
