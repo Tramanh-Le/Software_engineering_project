@@ -1,7 +1,7 @@
 <?php
 include ("Algorithm.php");
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 $servername = 'cancer-cant.cerorole96a1.us-west-2.rds.amazonaws.com';
 $username = 'root';
 $password = 'cancercant';
@@ -17,9 +17,7 @@ if ($link->connect_error) {
     die("Connection failed: " . $link->connect_error);
 }
 else {
-    echo "Connection successfully";
-    echo"\n"
-    ;
+    echo "";
 }
 $age = $cancer_type = $religious = $phase_treatment=$gender=$role ="";
 $first=$last=$email=$treatmentPhase=$location="";
@@ -28,26 +26,20 @@ $test_phase="";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     #<------------------------user_contact_data---------------->
-    echo $age =$_POST["age"];
-    echo $religious=$_POST["religion"];
-    echo $role=$_POST["your_role"];
-    echo $gender=$_POST["gender"];
-    echo $first=$_POST["name_first"];
-    echo $last=$_POST["name_last"];
-    echo $email=$_POST["email"];
-    echo $treatmentPhase=$_POST["treatment_phase"];
-    echo $location=$_POST["treatment_city"];
-    echo $city=$_POST["home_city"];
-    echo $state=$_POST["home_state"];
-    echo $phone =$_POST["phone"];
-    echo $cancer_type=$_POST["cancer-category"];
-    echo "THIS IS YOUR PHASE OF TREATMENT: ";
-    echo implode("|", $test_phase=$_POST['target_phase']);
-    echo "THIS IS YOUR goal: ";
-    echo implode("|", $test_goal=$_POST['target_goal']);
+    $age =$_POST["age"];
+    $religious=$_POST["religion"];
+    $role=$_POST["your_role"];
+    $gender=$_POST["gender"];
+    $first=$_POST["name_first"];
+    $last=$_POST["name_last"];
+    $email=$_POST["email"];
+    $treatmentPhase=$_POST["treatment_phase"];
+    $location=$_POST["treatment_city"];
+    $city=$_POST["home_city"];
+    $state=$_POST["home_state"];
+    $phone =$_POST["phone"];
+    $cancer_type=$_POST["cancer-category"];
 }
-echo("\n");
-echo($age);
 function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -62,14 +54,13 @@ $sql_2 = "INSERT INTO  UserFeatures.user_contact_data(first_name,last_name,city,
     VALUES ('$first','$last','$city','$state','$phone','$email','$matched_2')";
 
 if ($link->query($sql_2) === TRUE) {
-    echo "New record created successfully";
+    echo "";
 
 } else {
     echo "Error: " . $sql_2 . "<br>" . $link->error;
 }
 $id = "SELECT * From user_contact_data Order by id DESC Limit 1";
 $getId = $link -> query($id);
-
 while($row = $getId->fetch_assoc()) {
     $setid = $row["id"];
 }
@@ -77,7 +68,7 @@ $sql = "INSERT INTO UserFeatures.user_features(user_contact_data_id,age,cancer_c
     VALUES ('$setid','$age','$cancer_type','0','$religious','$treatmentPhase','$gender','$role','$first','$last','$location','$matched','$matched_2')";
 
 if ($link->query($sql) === TRUE) {
-    echo "New record created successfully";
+    echo "";
 
 } else {
     echo "Error: " . $sql . "<br>" . $link->error;
@@ -94,8 +85,6 @@ $last="SELECT * From user_features
 inner join user_contact_data where user_contact_data_id = user_contact_data.id
 order by user_contact_data_id desc limit 1";
 $last_result = $link->query($last);
-echo "EMAIL: ";
-echo $result->fetch_assoc()['email'];
 
 $p1 = new Algorithm();
 $compare1=new Algorithm();
@@ -162,7 +151,7 @@ elseif ($last_result->num_rows > 0) {
 }
 //if no rows then outout so
 else {
-    echo "0 results";
+    //echo "0 results";
 }
 
 //Helper function to output the data that was pulled from the db
@@ -179,13 +168,13 @@ function handle_row($row ) {
         "<br>";
 
 }
-echo "We made it here";
-$p1->printNewperson();
-echo "---------";
-echo $compare1->getId();
-$compare1->printPerson();
-$compare2->printPerson();
-$compare3->printPerson();
+// echo "We made it here";
+// $p1->printNewperson();
+// echo "---------";
+// echo $compare1->getId();
+// $compare1->printPerson();
+// $compare2->printPerson();
+// $compare3->printPerson();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -197,22 +186,21 @@ require 'libs/phpmailer/src/SMTP.php';
 
 
 $variables = array();
-$variables = get_patient_info_for_html($variables, $compare1, $compare2, $compare3);
+$variables = get_patient_info_for_html($variables, $compare1, $compare2, $compare3, $setid, $email);
 
 
 $template = file_get_contents("contents.html");
 
 foreach($variables as $key => $value)
 {
-    echo "KEY : " . $value;
     $template = str_replace('{{ '.$key.' }}', $value, $template);
 }
 
-send_email_with_info($template);
+send_email_with_info($template, $email);
 
 
 
-function get_patient_info_for_html($variables, $compare1, $compare2, $compare3)
+function get_patient_info_for_html($variables, $compare1, $compare2, $compare3, $setid, $email)
 {
     $variables['location1'] = $compare1->getTreatementLoctation();
     $variables['cancertype1'] = $compare1->getCancerType();
@@ -242,15 +230,18 @@ function get_patient_info_for_html($variables, $compare1, $compare2, $compare3)
     $variables['id3'] = $compare3->getId();
     #$varialbes['treatment_stage3'] = $compare3->getphaseTreatment_1();
 
+    $variables['user_id'] = $setid;
+    $variables['email'] = $email;
+
     return $variables;
 }
 
 
-function send_email_with_info($template)
+function send_email_with_info($template, $email)
 {
     $mail = new PHPMailer(); // create a new object
     $mail->IsSMTP(); // enable SMTP
-    $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+    $mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
     $mail->SMTPAuth = true; // authentication enabled
     $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
     $mail->Host = "smtp.gmail.com";
@@ -261,7 +252,7 @@ function send_email_with_info($template)
     $mail->SetFrom("9621312@gmail.com");
     $mail->Subject = "Test";
     $mail->Body = "hello";
-    $mail->AddAddress("nico@rodester.com");
+    $mail->AddAddress($email);
 
 
     $mail->Body = $template;
@@ -269,14 +260,25 @@ function send_email_with_info($template)
     if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
     } else {
-        echo "Message has been sent";
+        echo "";
     }
 
 }
 
 
-
 $link->close();
+function Redirect($url, $permanent = false)
+{
+    if (headers_sent() === false)
+    {
+        header('Location: ' . $url, true, ($permanent === true) ? 301 : 302);
+    }
+
+    exit();
+}
+
+Redirect('http://cancercant.com/', false);
+exit;
 
 
 

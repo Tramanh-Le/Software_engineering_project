@@ -49,6 +49,7 @@
     <div class="w3-third">
       <div class="w3-card w3-container" style="min-height:460px">
         <h3>Partner #1</h3><br>
+        <p>Name: {{ firstname1 }} {{ lastname1 }}</p>
         <p>Age: {{ age1 }}</p>
         <p>Location: {{ location1 }}</p>
         <p>Cancer Type: {{ cancertype1 }}</p>
@@ -57,13 +58,14 @@
         <p>ID: {{ id1 }}</p>
         <br>
         <br>
-        <a href="http://www.cancercant.com/" class="button">Connect</a>
+        <a href="http://localhost:8001/setMatched.php?var1={{ user_id }}&var2={{ id1 }}&var3={{ email }}" class="button">Connect</a>
       </div>
     </div>
 
     <div class="w3-third">
       <div class="w3-card w3-container" style="min-height:460px">
         <h3>Partner #2</h3><br>
+        <p>Name: {{ firstname2 }} {{ lastname2 }}</p>
         <p>Age: {{ age2 }}</p>
         <p>Location: {{ location2 }}</p>
         <p>Cancer Type: {{ cancertype2 }}</p>
@@ -72,7 +74,7 @@
         <p>ID: {{ id2 }}</p>
         <br>
         <br>
-        <a href="http://www.cancercant.com/" class="button">Connect</a>
+        <a href="http://localhost:8001/setMatched.php?var1={{ user_id }}&var2={{ id2 }}&var3={{ email }}" class="button">Connect</a>
       </div>
 
     </div>
@@ -80,6 +82,7 @@
     <div class="w3-third">
       <div class="w3-card w3-container" style="min-height:460px">
         <h3>Partner #3</h3><br>
+        <p>Name: {{ firstname3 }} {{ lastname3 }}</p>
         <p>Age: {{ age3 }}</p>
         <p>Location: {{ location3 }}</p>
         <p>Cancer Type: {{ cancertype3 }}</p>
@@ -88,7 +91,7 @@
         <p>ID: {{ id3 }}</p>
         <br>
         <br>
-        <a href="http://www.cancercant.com/" class="button">Connect</a>
+        <a href="http://localhost:8001/setMatched.php?var1={{ user_id }}&var2={{ id3 }}&var3={{ email }}" class="button">Connect</a>
       </div>
     </div>
   </div>

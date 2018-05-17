@@ -182,7 +182,6 @@ class Algorithm
             $Newpoints = 20;
         else
             $Newpoints = 0; // If gender do not match, no points assigned.
-
         $Newpoints = Algorithm::getpoints() + $Newpoints;
         $this->setPoints($Newpoints);
     }
