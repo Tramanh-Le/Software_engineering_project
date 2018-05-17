@@ -1,0 +1,115 @@
+/*
+ * Form validation and AJAX posting
+ */
+
+$(document).ready(function () {
+
+    // regular form
+    $("form.form-handler-post").each(function (form) {
+        form = $(this);
+        form.find("input.submit").click(function () {
+            if (form.validate().form()) {
+                // show loading
+                form.find(".loading").show();
+                // hide submit button
+                $(this).hide();
+                // submit
+                form.submit();
+            } else {
+                // not validated
+            }
+        });
+    });
+
+    // AJAX form
+    $("form.form-handler-ajax").each(function (form) {
+        var  form = $(this);
+        form.find("input.submit").click(function () {
+            form.submit();
+        });
+        form.ajaxForm({
+            clearForm: false,
+            resetForm: false,
+            dataType: "json",
+            timeout: 30000,
+            //url: "ajax.php", // use URL from form
+            type: 'POST',
+            beforeSubmit: function (data, form, options) {
+                // validate form
+                options = {};
+                if (form.validate(options).form()) {
+                    // validated
+                    // show loading
+                    showLoading(form);
+                    // continue to post form
+                    return true;
+                } else {
+                    // didn't validate
+                    return false;
+                }
+            },
+            error: function (response) {
+                // AJAX error
+                var msg = "Sorry, we had a problem on our server that didn't let us submit your form";
+                showMessage(msg);
+            },
+            success: function (response, status) {
+                var msg = "Sorry, we had a problem on our server that didn't let us submit your form";
+                // check for success variable
+                if (response != null) {
+                    // get message if available
+                    if (typeof response.message != "undefined") {
+                        msg = response.message;
+                    }
+                    // get success flag
+                    if (typeof response.success != "undefined") {
+                        if (response.success) {
+                            if(typeof response.redirect_path != "undefined"){
+                                // redirect
+                                window.location = response.redirect_path;
+                                return true;
+                            }
+                        }
+                    }
+                    // error
+                    hideLoading();
+                    showMessage(msg);
+                }
+            }
+        });
+
+        // callback for showing loading indicator and hiding submit button
+        function showLoading() {
+            // hide message
+            form.find(".ajax-message").hide();
+            // disable submit button
+            form.find(".button.submit").hide()
+            // show loading
+            form.find(".loading").show();
+        }
+
+        // callback for hiding loading indicator and showing submit button
+        function hideLoading() {
+            // enable submit button
+            form.find(".button.submit").show()
+            // hide loading
+            form.find(".loading")
+                .stop()
+                .hide()
+            ;
+        }
+
+        // callback for showing an ajax response message
+        function showMessage(msg) {
+            hideLoading();
+            form.find(".ajax-message").empty().append("<span>" + msg + "</span>").fadeIn('slow');
+        }
+
+        // validate on page load
+        //form.validate().form();
+
+
+    });
+
+
+});
