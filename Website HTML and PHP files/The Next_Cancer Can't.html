@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0137)file:///C:/Users/tle19/Documents/GitHub/Software_engineering_project/Website%20HTML%20and%20PHP%20files/The%20Next%20_Cancer%20Can't.html -->
+<!-- saved from url=(0091)file:///C:/Users/tle19/Documents/GitHub/S.E.-Test_HTML/The%20Next%20_%20Cancer%20Can't.html -->
 <html xmlns="http://www.w3.org/1999/xhtml" prefix="og: http://ogp.me/ns#" xml:lang="en" class="no-js" lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <title>The Next | Cancer Can't</title>
@@ -105,11 +105,11 @@
               <div class="row">
                 <div class="columns medium-6">
                   <label class="label-field">First Name:</label>
-                  <input type="text" class="input-text expand" required name="name_first" value="" title="Please enter your first name" placeholder="">
+                  <input type="text" class="input-text expand" required="" name="name_first" value="" title="Please enter your first name" placeholder="">
                 </div>
                 <div class="columns medium-6">
                   <label class="label-field">Last Name:</label>
-                  <input type="text" class="input-text expand" required name="name_last" value="" title="Please enter your last name" placeholder="">
+                  <input type="text" class="input-text expand" required="" name="name_last" value="" title="Please enter your last name" placeholder="">
                 </div>
               </div>
 
@@ -305,7 +305,8 @@
               <p>What phase of treatment is the person you hope to be paired with experiencing? (please select up to 2 options):
               </p>
               <div class="options">
-                <label class="label-field"> name='target_phase'>
+        <div class="options" name="target_phase">
+            <label class="label-field">
   								<input type="checkbox" name="options[Diagnosis/Induction]">
   								Diagnosis/Induction
   							</label>
@@ -321,10 +322,10 @@
   								<input type="checkbox" name="options[Experienced Loss]">
   								Experienced Loss
   							</label>
-              </div>
+              </div></div>
 
               <p>What are you looking to get out of The Next?</p>
-              <div class="options" name='target_goal'>
+              <div class="options" name="target_goal">
 				<label class="label-field">
 						<input type="checkbox" name="target_goal[]" value="Friendship">
 						Friendship
@@ -410,4 +411,5 @@
           </script>
         
 
-</div></div></body></html>
+</div></div>
+</body></html>
