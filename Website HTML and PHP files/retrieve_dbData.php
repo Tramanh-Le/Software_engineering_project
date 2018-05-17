@@ -66,11 +66,11 @@ $getId = $link -> query($id);
 while($row = $getId->fetch_assoc()) {
     $setid = $row["id"];
 }
-$sql = "INSERT INTO UserFeatures.user_features(user_contact_data_id,age,cancer_category,distance,religion,treatment_stage,
+$sql = "INSERT INTO UserFeatures.user_features(user_contact_data_id,age,cancer_category,religion,treatment_stage,
                                               gender,role_to_cancer,first_name,last_name,treatment_city,treatment_state,
                                               is_matched,is_matched_to_user)
-    VALUES ('$setid','$age','$cancer_type','0','$religious','$treatmentPhase','$gender','$role','$first','$last',
-            '$treatmentCity',$treatmentState'$matched','$matched_2')";
+    VALUES ('$setid','$age','$cancer_type','$religious','$treatmentPhase','$gender','$role','$first','$last',
+            '$treatmentCity','$treatmentState','$matched','$matched_2')";
 
 if ($link->query($sql) === TRUE) {
     echo "";
@@ -110,23 +110,26 @@ elseif ($last_result->num_rows > 0) {
     // output data of each row
     while($row = $last_result->fetch_assoc()) {
         //handle_row($row);
-        //echo "Row handeled";
-        $p1 -> setNewPerson($row["ID"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],
+
+        $p1 -> setNewPerson($row["user_contact_data_id"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],
                             $row["treatment_city"],$row["treatment_state"], $row["role_to_cancer"],$row["first_name"],
                             $row["last_name"],$row["email"], $row["treatment_stage"],$row["is_matched"]);
     }
     if($result->num_rows > 0)
         while($row_new = $result->fetch_assoc()) {
             //handle_row($row_new);
-            $p1 -> setNewPerson($row["ID"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],
-                                $row["treatment_city"],$row["treatment_state"], $row["role_to_cancer"],$row["first_name"],
-                                $row["last_name"],$row["email"], $row["treatment_stage"],$row["is_matched"]);
+            $p1 -> setPerson($row_new["user_contact_data_id"],$row_new["age"],$row_new["cancer_category"],$row_new["gender"],$row_new["religion"],
+                $row_new["treatment_city"],$row_new["treatment_state"], $row_new["role_to_cancer"],$row_new["first_name"],
+                $row_new["last_name"],$row_new["email"], $row_new["treatment_stage"],$row_new["is_matched"]);
+
             $p1->setPoints(0);
             //$p1->printPerson();
             if($p1->getMachted()=="0" || $p1->getMachted()==0) {
                 $p1->runAlgorithm();
+//                print($p1->getpoints());
                 if ($p1->getId() != $p1->getNewId()) {
                     if ($compare1->getpoints() < $p1->getpoints()) {
+
                         $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(),
                                              $compare2->getReligion(), $compare2->getTreatementCity(),$compare2->getTreatementState(),
                                              $compare2->getRole(), $compare2->getFirstName(), $compare2->getNewLastName(),
@@ -176,9 +179,11 @@ elseif ($last_result->num_rows > 0) {
         }
 }
 //if no rows then outout so
+
 else {
     //echo "0 results";
 }
+//print($compare1->getpoints());
 
 //Helper function to output the data that was pulled from the db
 //row is essentially a hashmap or dictionary pertaining to each
@@ -194,13 +199,13 @@ function handle_row($row ) {
         "<br>";
 
 }
-// echo "We made it here";
-// $p1->printNewperson();
-// echo "---------";
-// echo $compare1->getId();
-// $compare1->printPerson();
-// $compare2->printPerson();
-// $compare3->printPerson();
+// /echo "We made it here";
+// /$p1->printNewperson();
+ //echo "---------";
+ //echo $compare1->getId();
+ //$compare1->printPerson();
+ //$compare2->printPerson();
+ //$compare3->printPerson();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
