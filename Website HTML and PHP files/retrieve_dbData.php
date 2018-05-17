@@ -20,7 +20,7 @@ else {
     echo "";
 }
 $age = $cancer_type = $religious = $phase_treatment=$gender=$role ="";
-$first=$last=$email=$treatmentPhase=$location="";
+$first=$last=$email=$treatmentPhase=$treatmentCity=$treatmentState="";
 $city=$state=$phone="";
 $test_phase="";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -34,11 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $last=$_POST["name_last"];
     $email=$_POST["email"];
     $treatmentPhase=$_POST["treatment_phase"];
-    $location=$_POST["treatment_city"];
+    $treatmentCity=$_POST["treatment_city"];
+    $treatmentState=$_POST["treatment_state"];
     $city=$_POST["home_city"];
     $state=$_POST["home_state"];
     $phone =$_POST["phone"];
     $cancer_type=$_POST["cancer-category"];
+
 }
 function test_input($data) {
     $data = trim($data);
@@ -64,8 +66,11 @@ $getId = $link -> query($id);
 while($row = $getId->fetch_assoc()) {
     $setid = $row["id"];
 }
-$sql = "INSERT INTO UserFeatures.user_features(user_contact_data_id,age,cancer_category,distance,religion,treatment_stage,gender,role_to_cancer,first_name,last_name,treatment_location,is_matched,is_matched_to_user)
-    VALUES ('$setid','$age','$cancer_type','0','$religious','$treatmentPhase','$gender','$role','$first','$last','$location','$matched','$matched_2')";
+$sql = "INSERT INTO UserFeatures.user_features(user_contact_data_id,age,cancer_category,distance,religion,treatment_stage,
+                                              gender,role_to_cancer,first_name,last_name,treatment_city,treatment_state,
+                                              is_matched,is_matched_to_user)
+    VALUES ('$setid','$age','$cancer_type','0','$religious','$treatmentPhase','$gender','$role','$first','$last',
+            '$treatmentCity',$treatmentState'$matched','$matched_2')";
 
 if ($link->query($sql) === TRUE) {
     echo "";
@@ -106,43 +111,70 @@ elseif ($last_result->num_rows > 0) {
     while($row = $last_result->fetch_assoc()) {
         //handle_row($row);
         //echo "Row handeled";
-        $p1 -> setNewPerson($row["user_contact_data_id"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],$row["treatment_location"],
-                                 $row["role_to_cancer"],$row["first_name"],$row["last_name"],$row["email"],$row["treatment_stage"],$row["is_matched"]);
+        $p1 -> setNewPerson($row["ID"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],
+                            $row["treatment_city"],$row["treatment_state"], $row["role_to_cancer"],$row["first_name"],
+                            $row["last_name"],$row["email"], $row["treatment_stage"],$row["is_matched"],$row["city"],$row["state"]);
     }
     if($result->num_rows > 0)
         while($row_new = $result->fetch_assoc()) {
             //handle_row($row_new);
-            $p1->setPerson($row_new["user_contact_data_id"], $row_new["age"], $row_new["cancer_category"], $row_new["gender"], $row_new["religion"], $row_new["treatment_location"],
-                            $row_new["role_to_cancer"],$row_new["first_name"],$row_new["last_name"],$row_new["email"],$row_new["treatment_stage"],$row_new["is_matched"]);
+            $p1 -> setNewPerson($row["ID"],$row["age"],$row["cancer_category"],$row["gender"],$row["religion"],
+                                $row["treatment_city"],$row["treatment_state"], $row["role_to_cancer"],$row["first_name"],
+                                $row["last_name"],$row["email"], $row["treatment_stage"],$row["is_matched"],$row["city"],$row["state"]);
             $p1->setPoints(0);
             //$p1->printPerson();
             if($p1->getMachted()=="0" || $p1->getMachted()==0) {
                 $p1->runAlgorithm();
                 if ($p1->getId() != $p1->getNewId()) {
                     if ($compare1->getpoints() < $p1->getpoints()) {
-                        $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(), $compare2->getReligion(), $compare2->getTreatementLoctation(),
-                            $compare2->getRole(), $compare2->getFirstName(), $compare2->getNewLastName(), $compare2->getEmail(), $compare2->getTreatmentPhase(), $compare2->getMachted());
+                        $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(),
+                                             $compare2->getReligion(), $compare2->getTreatementCity(),$compare2->getTreatementState(),
+                                             $compare2->getRole(), $compare2->getFirstName(), $compare2->getNewLastName(),
+                                             $compare2->getEmail(), $compare2->getTreatmentPhase(), $compare2->getMachted(),
+                                             $compare2->getcity(),$compare2->getState());
+
                         $compare3->setPoints($compare2->getpoints());
 
-                        $compare2->setPerson($compare1->getId(), $compare1->getAge(), $compare1->getCancerType(), $compare1->getGender(), $compare1->getReligion(), $compare1->getTreatementLoctation(),
-                            $compare1->getRole(), $compare1->getFirstName(), $compare1->getLastName(), $compare1->getEmail(), $compare1->getTreatmentPhase(), $compare1->getMachted());
+                        $compare2->setPerson($compare1->getId(), $compare1->getAge(), $compare1->getCancerType(), $compare1->getGender(),
+                                             $compare1->getReligion(), $compare1->getTreatementCity(),$compare1->getTreatementState(),
+                                             $compare1->getRole(), $compare1->getFirstName(), $compare1->getNewLastName(),
+                                             $compare1->getEmail(), $compare1->getTreatmentPhase(), $compare1->getMachted(),
+                                             $compare1->getcity(),$compare1->getState());
+
                         $compare2->setPoints($compare1->getpoints());
 
-                        $compare1->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(),
-                            $p1->getRole(), $p1->getFirstName(), $p1->getLastName(), $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted());
+                        $compare1->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(),
+                                             $p1->getReligion(), $p1->getTreatementCity(),$p1->getTreatementState(),
+                                             $p1->getRole(), $p1->getFirstName(), $p1->getNewLastName(),
+                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted(),
+                                             $p1->getcity(),$p1->getState());
+
                         $compare1->setPoints($p1->getpoints());
-                    } elseif ($compare2->getpoints() < $p1->getpoints()) {
-                        $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(), $compare2->getReligion(), $compare2->getTreatementLoctation(),
-                            $compare2->getRole(), $compare2->getFirstName(), $compare2->getNewLastName(), $compare2->getEmail(), $compare2->getTreatmentPhase(), $compare2->getMachted());
+                        }
+                    elseif ($compare2->getpoints() < $p1->getpoints()) {
+                        $compare3->setPerson($compare2->getId(), $compare2->getAge(), $compare2->getCancerType(), $compare2->getGender(),
+                                             $compare2->getReligion(), $compare2->getTreatementCity(),$compare2->getTreatementState(),
+                                             $compare2->getRole(), $compare2->getFirstName(), $compare2->getNewLastName(),
+                                             $compare2->getEmail(), $compare2->getTreatmentPhase(), $compare2->getMachted(),
+                                             $compare2->getcity(),$compare2->getState());
+
                         $compare3->setPoints($compare2->getpoints());
 
-                        $compare2->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(),
-                            $p1->getRole(), $p1->getFirstName(), $p1->getLastName(), $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted());
-                        $compare2->setPoints($p1->getpoints());
+                        $compare2->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(),
+                                             $p1->getReligion(), $p1->getTreatementCity(),$p1->getTreatementState(),
+                                             $p1->getRole(), $p1->getFirstName(), $p1->getNewLastName(),
+                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted(),
+                                             $p1->getcity(),$p1->getState());
 
-                    } elseif ($compare3->getpoints() < $p1->getpoints()) {
-                        $compare3->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(), $p1->getReligion(), $p1->getTreatementLoctation(),
-                            $p1->getRole(), $p1->getFirstName(), $p1->getLastName(), $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted());
+                        $compare2->setPoints($p1->getpoints());
+                        }
+                        elseif ($compare3->getpoints() < $p1->getpoints()) {
+                        $compare3->setPerson($p1->getId(), $p1->getAge(), $p1->getCancerType(), $p1->getGender(),
+                                             $p1->getReligion(), $p1->getTreatementCity(),$p1->getTreatementState(),
+                                             $p1->getRole(), $p1->getFirstName(), $p1->getNewLastName(),
+                                             $p1->getEmail(), $p1->getTreatmentPhase(), $p1->getMachted(),
+                                             $p1->getcity(),$p1->getState());
+
                         $compare3->setPoints($p1->getpoints());
                     }
                 }
@@ -202,7 +234,7 @@ send_email_with_info($template, $email);
 
 function get_patient_info_for_html($variables, $compare1, $compare2, $compare3, $setid, $email)
 {
-    $variables['location1'] = $compare1->getTreatementLoctation();
+    $variables['location1'] = $compare1->getTreatementCity();
     $variables['cancertype1'] = $compare1->getCancerType();
     $variables['age1'] = $compare1->getAge();
     $variables['firstname1'] = $compare1->getFirstName();
@@ -214,7 +246,7 @@ function get_patient_info_for_html($variables, $compare1, $compare2, $compare3, 
     $variables['firstname2'] = $compare2->getFirstName();
     $variables['lastname2'] = $compare2->getLastName();
     $variables['cancertype2'] = $compare2->getCancerType();
-    $variables['location2'] = $compare2->getTreatementLoctation();
+    $variables['location2'] = $compare2->getTreatementCity();
     $variables['age2'] = $compare2->getAge();
     $variables['religion2'] = $compare2->getReligion();
     $variables['role2'] = $compare2->getRole();
@@ -226,7 +258,7 @@ function get_patient_info_for_html($variables, $compare1, $compare2, $compare3, 
     $variables['age3'] = $compare3->getAge();
     $variables['religion3'] = $compare3->getReligion();
     $variables['role3'] = $compare3->getRole();
-    $variables['location3'] = $compare3->getTreatementLoctation();
+    $variables['location3'] = $compare3->getTreatementCity();
     $variables['id3'] = $compare3->getId();
     #$varialbes['treatment_stage3'] = $compare3->getphaseTreatment_1();
 
